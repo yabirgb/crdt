@@ -117,8 +117,10 @@ class Cluster:
         return data
 
     def sync(self, i):
-        for server in self.cluster:
-            self.cluster[i].merge(server)
+        if self.cluster[i].alive:
+            for server in self.cluster:
+                if server.alive:
+                    self.cluster[i].merge(server)
             
 
     def list_of_videos(self) -> List[str]:
