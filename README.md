@@ -20,7 +20,7 @@ The webpage fetches every two seconds information from the server.
 
 ## What I have done
 
-### Reseach
+### Research
 
 First of all I've researched on the topic of CRDTs. I've found that it
 works because what it's really being build is a _lattice structure_.
