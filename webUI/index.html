@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <title>CRDT Project</title>
+    <meta charset="UTF-8"> 
+  </head>
+  <body>
+
+    <div id="app">
+      <h1>{{ foo }}</h1>
+      <div v-if="servers">
+	  <div v-for="(server, index) in servers">
+	    {{ index }}: {{ server.ident }}
+	    <div>
+	      <ul>
+		<li v-for="video in server.videos">
+		  {{video}}
+		</li>
+	      </ul>
+	    </div>
+	  </div>
+      </div>
+      <div>
+	<select v-if="servers" v-model="selected" multiple>
+	  <option v-for="server in servers">{{server.ident}}</option>
+	</select>
+	<input v-model="times"></input>
+	<button v-on:click="watch()">Watch</button>
+      </div>
+    </div>
+    
+    <script src="/js/vue.min.js"></script>
+    <script src="/js/resource.js"></script>
+    <script>
+      var host = 'http://localhost:8000';
+      var vm = new Vue({
+	  el: '#app',
+	  data: function(){
+	      return{
+		  foo: 'CRDT Algorithm',
+		  servers: false,
+		  selected: null,
+		  times: 1
+	      }
+	  },
+	  methods:{
+	      getServers(){
+		  var self = this;
+		  this.$http.get(host+'/servers').then(function(response){
+		      if(response.status == "200"){
+			  self.servers = response.data;
+		      }})
+	      },
+
+	      watch(){
+		  var self = this;
+		  this.$http.get(host+'/watch/' + this.selected + "/" + this.times).then(function(response){
+		      if(response.status == "200"){
+			  this.getServers();
+		      }})
+	      }
+	  },
+	  mounted () {
+	      this.getServers();
+	      var self = this;
+	      (function(){
+		  self.getServers();
+		  setTimeout(arguments.callee, 2000);
+	      })();
+	  }
+      });
+    </script>
+  </body>
+</html>

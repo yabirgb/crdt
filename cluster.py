@@ -8,6 +8,7 @@ class Server:
 
         self.id_ = str(uuid4())
         self.universe = {self.id_ : {}}
+        self.alive = True
 
         # Initialize the videos with a default
         # number of views of 0
@@ -17,7 +18,13 @@ class Server:
 
 
     def info(self):
-        return self.universe[self.id_]
+        data = {'videos':{}}
+        for video in self.universe[self.id_]:
+            data['videos'][video] = self.count(video)
+        data['ident'] = self.id_
+        data['alive'] = self.alive
+
+        return data
 
 
     # Different functions used by the crdt
@@ -109,13 +116,24 @@ class Cluster:
 
         return data
 
+    def sync(self, i):
+        for server in self.cluster:
+            self.cluster[i].merge(server)
+            
+
     def list_of_videos(self) -> List[str]:
         return self.videos
 
-    def watch(self, server_id: int) -> None:
+    def watch(self, server_id: str, times:Union[int, None] = None) -> None:
         """
         server_id is in the range 0 <= server_id < amount
         being it the positional id of the server in the cluster list
         """
 
-        self.cluster[server_id].incr(self.videos[0])
+        for server in self.cluster:
+            if server_id == server.id_:
+                if times:
+                    server.incr_by(self.videos[0], times)
+                else:
+                    server.incr(self.videos[0])
+                break
