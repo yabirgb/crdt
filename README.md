@@ -64,7 +64,7 @@ created a task with it that every 2 seconds performs the merge
 operation for a certain server each time (to test the interface
 working only one node communicate with 5 nodes each time). Also sanic
 provides the API endpoints for the web interface to operate on the
-program.  I've choosen to build a web interface because it emulates
+program.  I've chosen to build a web interface because it emulates
 the activity proposed in the exercise while I can easily manage the
 state of the system.
 
