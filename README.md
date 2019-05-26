@@ -72,14 +72,46 @@ For this reason each instance of `Server` doesn't assume that the number of vide
 is 1 but to make easy the web interface I just made available one
 video.
 
+### About the problem and my implementation
+
+With the code provided I belive to achieve the task proposed:
+
+- Read up on CRDTs and specifically Grow-Only counters
+- Write a program that simulates the distributed system of multiple independent nodes
+- Simulate the process of a fixed number of page views being sent to an arbitrary node
+- Implement a Grow-Only counter that is used to respond to incoming page views
+- Build a simple frontend visualization of the page counter
+
+In my implementation the nodes are "interconnected" in the way that
+they have direct access to their data so they just "talk" with each
+other asking for the info (it simulates a distributed system but is
+not a distributed system).
+
+If this is an error on how I understood the problem and alternative
+solution will reimplement the system as:
+
+- Each instance of the class `Server` is a different programm running
+  isolated.
+- Each server has an API endpoint where I can `POST` a json object
+  containing pairs of videos ids and the number of views.
+- The merge operation is implemented in that API endpoint but this
+  time I use the information provided instead of just going and look
+  for it as I do now.
+- Eeach server should now know where to locate each other, let's say
+  by knowing their ports and ip's.
+- Now the clusted class is not necessary.
+
 ### About the questions
 
 **What can happen when the user reloads the website? Can we synchronize the counter
 not only across nodes but also across the nodes and the frontend?**
 
-We can introduce the frontend as one more server and sync the counter
-with it too. When the user reloads the website we can expect that the
-program destroys the server from the list of servers.
+When the user reloads the website the site should show the same or a
+greater counter depending on the updated counter. We can introduce the
+frontend as one more server and sync the counter with it too. In this
+case when the user reloads the website we can expect that the program
+destroys the frontend from the list of connected servers loosing its
+counter.
 
 **What happens if a node gets removed from the cluster? What happens if more nodes
 get added to the cluster?**
