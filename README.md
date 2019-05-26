@@ -60,9 +60,10 @@ your location with the right server).
 The main script is a [sanic
 server](https://github.com/huge-success/sanic). I've choosen sanic
 because is a flask like framework that can work asyncronously. I've
-created a task with it that every 5 seconds performs the merge
-operation for a certain server each time. Also sanic provides the API
-endpoints for the web interface to operate on the program.
+created a task with it that every 2 seconds performs the merge
+operation for a certain server each time (to see the interface working
+only one node communicate with 5 nodes each time). Also sanic provides the
+API endpoints for the web interface to operate on the program.
 
 ### Things that I changed
 
