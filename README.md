@@ -27,8 +27,7 @@ works because what it's really being build is a _lattice structure_.
 A lattice is in mathematics a structure where every two elements have
 supremum and infimum, both uniques. What we are doing with the counter
 is to define the supreme operation as the maximum of two numbers that
-verifies the properties of being _idempotent_ (operation applied to an
-object and itself results in the same object) and transitive. For this
+verifies the properties of being _idempotent_ and transitive. For this
 reason asynctotycally what we are doing is to reach the total number
 of views registered individually by each server.
 
