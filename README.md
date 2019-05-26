@@ -96,10 +96,10 @@ solution will reimplement the system as:
   containing pairs of videos ids and the number of views.
 - The merge operation is implemented in that API endpoint but this
   time I use the information provided instead of just going and look
-  for it as I do now.
+  for it, as I do now.
 - Eeach server should now know where to locate each other, let's say
   by knowing their ports and ip's.
-- Now the clusted class is not necessary.
+- Now the cluster class is not necessary.
 
 ### About the questions
 
