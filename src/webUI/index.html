@@ -2,15 +2,26 @@
 <html lang='en'>
   <head>
     <title>CRDT Project</title>
-    <meta charset="UTF-8"> 
+    <meta charset="UTF-8">
+    <style>
+      #app{
+	  display: flex;
+		   
+      }
+
+      #app > div{
+	  flex: 1;
+      }
+    </style>
   </head>
   <body>
-
+    <h1>CRDT Algorithm</h1>
     <div id="app">
-      <h1>{{ foo }}</h1>
+
       <div v-if="servers">
 	  <div v-for="(server, index) in servers">
-	    {{ index }}: {{ server.ident }}
+	    {{ index }}: {{ server.ident }}<b v-if="server.alive"> Server connected</b>
+	    <b v-else>Server disconnected</b>
 	    <div>
 	      <ul>
 		<li v-for="video in server.videos">
@@ -20,20 +31,32 @@
 	    </div>
 	  </div>
       </div>
-      <hr>
-      <h5>Watch the video in the server</h5>
       <div>
-	<select v-if="servers" v-model="selected" multiple>
-	  <option v-for="server in servers">{{server.ident}}</option>
-	</select>
-	<input v-model="times"></input>
-	<button v-on:click="watch()">Watch</button>
+	<h5>Watch the video in the server</h5>
+	<div>
+	  <select v-if="servers" v-model="selected" multiple>
+	    <option v-for="server in servers">{{server.ident}}</option>
+	  </select>
+	  <br><br>
+	  <input v-model="times"></input>
+	  <button v-on:click="watch()">Watch</button>
+	</div>
+	
+	<hr>
+	
+	<div>
+	  <h5>Start or shutdown the server</h5>
+	  <select v-if="servers" v-model="selected" multiple>
+	    <option v-for="server in servers">{{server.ident}}</option>
+	  </select>
+	  <br><br>
+	  <button v-on:click="toggle()">Toggle status</button>
+	</div>
+	
+	<hr>
+	<button v-on:click="test()">Simulate Test</button>
+	<p v-if="total > 0">Total number of views for test: {{total}}</p>
       </div>
-
-      <hr>
-      <button v-on:click="test()">Simulate Test</button>
-      <p v-if="total > 0">Total number of views for test: {{total}}</p>
-      
     </div>
 
  
@@ -45,7 +68,6 @@
 	  el: '#app',
 	  data: function(){
 	      return{
-		  foo: 'CRDT Algorithm',
 		  servers: false,
 		  selected: null,
 		  times: 1,
@@ -81,6 +103,14 @@
 		      self.total += amount
 		  }
 
+	      },
+
+	      toggle(){
+		  var self = this;
+		  this.$http.get(host+'/toggle/' + this.selected).then(function(response){
+		      if(response.status == "200"){
+			  this.getServers();
+		      }})
 	      }
 	  },
 	  mounted () {

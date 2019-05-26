@@ -141,3 +141,9 @@ class Cluster:
                 else:
                     server.incr(self.videos[0])
                 break
+
+    def toggle(self, id_):
+        for server in self.cluster:
+            if server.id_ == id_:
+                server.alive = not server.alive
+                break

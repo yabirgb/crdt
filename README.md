@@ -54,16 +54,19 @@ The class `Cluster` is the one representing the network that all the
 servers build. Its task in the program is to build each server,
 populate it's list of servers and communicate with the frontend for
 tasks like deleting a node or watching a video in a node (the idea is
-that this class is like the load balancer or the router that matches
+that this class acts like the load balancer or the router that matches
 your location with the right server).
 
 The main script is a [sanic
 server](https://github.com/huge-success/sanic). I've choosen sanic
 because is a flask like framework that can work asyncronously. I've
 created a task with it that every 2 seconds performs the merge
-operation for a certain server each time (to see the interface working
-only one node communicate with 5 nodes each time). Also sanic provides the
-API endpoints for the web interface to operate on the program.
+operation for a certain server each time (to test the interface
+working only one node communicate with 5 nodes each time). Also sanic
+provides the API endpoints for the web interface to operate on the
+program.  I've choosen to build a web interface because it emulates
+the activity proposed in the exercise while I can easily manage the
+state of the system.
 
 ### Things that I changed
 
@@ -89,7 +92,7 @@ other asking for the info (it simulates a distributed system but is
 not a distributed system).
 
 If this is an error on how I understood the problem and alternative
-solution will reimplement the system as:
+solution will reimplement the system being distributed as:
 
 - Each instance of the class `Server` is a different programm running
   isolated.
@@ -119,7 +122,7 @@ get added to the cluster?**
 
 If a server gets removed from the cluster we'll loose the counter
 information corresponding to this node unless it syncronizes it's
-information with the rest of nodes before being destroyed.  If a node
+information with at least one node before being destroyed.  If a node
 gets added to the cluster it's inmediatly known by the rest of servers
 and after a certain period of time it'll retrive the up to date
 information.

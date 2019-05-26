@@ -53,6 +53,11 @@ async def watch(request, server, times):
     cluster.watch(server, int(times))
     return json(f"Now playing the only video on server #{server}")
 
+@app.route('/toggle/<sid>/')
+async def toggle(request, sid):
+    cluster.toggle(sid)
+    return text("OK")
+
 
 
 
