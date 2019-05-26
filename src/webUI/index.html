@@ -27,8 +27,13 @@
 	<input v-model="times"></input>
 	<button v-on:click="watch()">Watch</button>
       </div>
+
+      <button v-on:click="test()">Simulate Test</button>
+      <p v-if="total > 0">Total number of views for test: {{total}}</p>
+      
     </div>
-    
+
+ 
     <script src="/js/vue.min.js"></script>
     <script src="/js/resource.js"></script>
     <script>
@@ -40,7 +45,8 @@
 		  foo: 'CRDT Algorithm',
 		  servers: false,
 		  selected: null,
-		  times: 1
+		  times: 1,
+		  total: 0
 	      }
 	  },
 	  methods:{
@@ -58,6 +64,20 @@
 		      if(response.status == "200"){
 			  this.getServers();
 		      }})
+	      },
+
+	      test(){
+		  var self = this;
+		  for (var key in this.servers){
+		      var amount = Math.floor(Math.random() * (1000 - 1)) + 1;
+		      this.$http.get(host+'/watch/' + self.servers[key].ident + "/" + amount).then(function(response){
+		      if(response.status == "200"){
+			  self.getServers();
+			  total += amount;
+		      }})
+		      self.total += amount
+		  }
+
 	      }
 	  },
 	  mounted () {
