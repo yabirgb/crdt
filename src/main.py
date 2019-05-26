@@ -21,7 +21,7 @@ async def sync_action():
     size = len(cluster.info())
 
     while True:
-        await asyncio.sleep(5)
+        await asyncio.sleep(2)
         cluster.sync(i)
         print(f"Synced {i}")
         i += 1
@@ -59,6 +59,6 @@ async def watch(request, server, times):
 if __name__ == '__main__':
 
     if len(sys.argv) > 1:
-        app.run(host='127.0.0.1', port=int(sys.argv[1]), auto_reload=True)
+        app.run(host='0.0.0.0', port=int(sys.argv[1]), auto_reload=True)
     else:
         print("Not enought arguments")

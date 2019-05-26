@@ -1,3 +1,4 @@
+import random
 from typing import List
 from typing import Union
 from uuid import uuid4
@@ -118,7 +119,8 @@ class Cluster:
 
     def sync(self, i):
         if self.cluster[i].alive:
-            for server in self.cluster:
+            for pos in random.sample(range(0, len(self.cluster)),5):
+                server = self.cluster[pos]
                 if server.alive:
                     self.cluster[i].merge(server)
             
