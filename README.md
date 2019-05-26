@@ -12,7 +12,7 @@ the url [http://localhost:8000](http://localhost:8000).
 In this webpage you can find different things:
 
 - A monitorizing tool where for each server you find the counter of
-  views for a certain video that the server has stored (the growing counter).
+  views for a certain video that the server has stored (the growing counter)
 - A little web form so you can send a certain number of views to a node
 - A button to prepare a test where each server recives a random amount of views
 
