@@ -3,7 +3,7 @@
 ## Setup
 
 With this file you can find a `docker-compose.yml` file containing the
-needed instructions to mount a docker container with all the setup ready
+needed configuration to mount a docker container with all the setup ready
 to run this project.
 
 The docker project opens a connection on port 8000 so you can go visit
@@ -14,7 +14,7 @@ In this webpage you can find different things:
 - A monitorizing tool where for each server you find the counter of
   views for a certain video that the server has stored (the growing counter).
 - A little web form so you can send a certain number of views to a node
-- A button to load a test where each server is loaded with a random amount of views
+- A button to prepare a test where each server recives a random amount of views
 
 The webpage fetches every two seconds information from the server.
 
@@ -46,7 +46,7 @@ The _CRDT-counter_ operations are implemented in this class, those are:
   the current node by `amount`.
 - `set_to(video_id, amount)`: Set the views counter to a certain amount.
 - `total(video_id)`: Total number of views received in the node.
-- `count(video_id)`: Total number of views of the video in the network.
+- `count(video_id)`: Total number of views of the video in the network (as known by now by the node).
 - `merge(server)`: The operation that using the max function updates
   the state of the local counter.
 
